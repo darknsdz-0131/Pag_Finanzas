@@ -1,0 +1,52 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { TitleSection } from './TitleSection';
+import { features } from '@/data/data';
+import { useLanguage } from '@/context/LanguageContext';
+
+export const FeaturesSection = () => {
+  const { t } = useLanguage();
+
+  return (
+    <section id='features' className='section-padding scroll-mt-24'>
+      <div className='container'>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className='section-header-wrapper'
+        >
+          <TitleSection title={t('features.title')} />
+          <p className='section-description'>
+            {t('features.description')}
+          </p>
+        </motion.div>
+
+        {/* Cards */}
+        <div className='grid md:grid-cols-2 lg:grid-cols-4 gap-6'>
+          {features.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className='bg-card border border-border rounded-3xl p-8 hover:shadow-xl transition-all hover:-translate-y-2 group'
+            >
+              <div className='size-14 rounded-2xl icon-container-base mb-6 group-hover:bg-primary group-hover:scale-110 transition-all'>
+                <feature.icon className='size-7 group-hover:text-primary-foreground transition-colors' />
+              </div>
+              <h3 className='text-xl font-semibold text-foreground mb-3'>
+                {t(`features.${index}.title`)}
+              </h3>
+              <p className='text-muted-foreground'>
+                {t(`features.${index}.description`)}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
